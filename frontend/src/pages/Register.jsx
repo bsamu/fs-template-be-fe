@@ -1,7 +1,5 @@
 import { Button, Input } from "@mui/material";
-import React from "react";
-import { useState } from "react";
-import http from "axios";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toDoApi } from "../api/toDoApi";
 import { useAuth } from "../providers/auth";
@@ -9,12 +7,11 @@ import { useAuth } from "../providers/auth";
 const Register = () => {
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
-  const { register } = useAuth();
+  const { user, register } = useAuth();
 
-  const triggerRegister = async () => {
-    await register(username);
-    navigate("/profile");
-  };
+  useEffect(() => {
+    if (user.userId) navigate("/profile");
+  }, [user]);
 
   return (
     <>
@@ -26,7 +23,7 @@ const Register = () => {
         onChange={(event) => setUsername(event.target.value)}
       />
       <br />
-      <Button onClick={triggerRegister}>Register</Button>
+      <Button onClick={() => register(username)}>Register</Button>
     </>
   );
 };

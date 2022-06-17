@@ -36,7 +36,7 @@ export const toDoApi = () => {
     return { post, get, _instance: instance }; // _private_stuff
 };
 
-module.exports = http();
+// module.exports = toDoApi();
 
 /*
 

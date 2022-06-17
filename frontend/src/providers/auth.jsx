@@ -51,7 +51,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const register = async (username) => {
-    const response = post("/user/create", { username });
+    const response = await post("/user/create", { username });
 
     if (response?.status === 200) {
       setToken(response.data.token);
