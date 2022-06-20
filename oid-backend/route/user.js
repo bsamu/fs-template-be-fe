@@ -89,7 +89,7 @@ router.post("/create", auth({ block: true }), async (req, res) => {
   });
 
   const token = jwt.sign({ userId: user._id, providers: user.providers }, process.env.SECRET_KEY, { expiresIn: "1h" });
-  res.status(200).json({ token });
+  res.status(200).json(token);
 });
 
 module.exports = router;
