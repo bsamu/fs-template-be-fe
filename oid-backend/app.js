@@ -18,8 +18,8 @@ app.use(cors(corsOptions));
 app.use(express.json()); // body-ban erkezo json-t parse-olni tudja
 app.use(morgan(":method :url :status - HOST: :host  - :response-time ms")); // use this middleware on every request
 
-const dashboardRoutes = require("./route/dashboard");
-app.use("/api/dashboards", dashboardRoutes);
+const clientRoutes = require("./route/client");
+app.use("/api/client", clientRoutes);
 const userRoutes = require("./route/user.js");
 app.use("/api/user", userRoutes);
 

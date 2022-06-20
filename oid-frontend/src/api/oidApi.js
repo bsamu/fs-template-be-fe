@@ -1,18 +1,15 @@
 import http from "axios";
+import config from "../app.config";
 
-export const toDoApi = () => {
+export const oidApi = () => {
     const instance = http.create({
-        baseURL: "http://localhost:4000/api",
+        baseURL: config.oidapi,
         timeout: 3000,
     });
 
     const post = async (path, data) => {
         try {
-            const response = await instance.post(path, data, {
-                headers: {
-                    authorization: localStorage.getItem("token"),
-                }
-            });
+            const response = await instance.post(path, data, { });
             return response;
         } catch (err) {
             if (!err.response) return err;
@@ -22,11 +19,7 @@ export const toDoApi = () => {
 
     const get = async (path) => {
         try {
-            const response = await instance.get(path, {
-                headers: {
-                    authorization: localStorage.getItem("token"),
-                }
-            });
+            const response = await instance.get(path, { });
             return response;
         } catch (err) {
             if (!err.response) return err;

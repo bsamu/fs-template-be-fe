@@ -8,6 +8,16 @@ const config = {
         tokenEndpoint: "https://oauth2.googleapis.com/token",
         scope: "openid",
       },
+
+      oid: {
+        clientId:
+          process.env.OID_CLIENT_ID || "mycustomclientid",
+        clientSecret: process.env.OID_CLIENT_SECRET || "mycustomclientsecret",
+        redirectUri: process.env.OID_REDIRECT_URI || "http://localhost:3000/callbackoid",
+        tokenEndpoint: "http://localhost:4001/token",
+        scope: "openid",
+      },
+
       github: {
         clientId: process.env.GITHUB_CLIENT_ID || "a6b3d8e1c2c6c193dac2",
         clientSecret: process.env.GITHUB_CLIENT_SECRET || "7c566a9529bc9ef3dee18af40e183ec31e768291",

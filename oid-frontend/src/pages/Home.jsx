@@ -1,43 +1,70 @@
 import { React, useEffect, useState } from "react";
 import Button from "@mui/material/Button";
-import { useCounter } from "../hooks/useCounter";
-import { useCounter as useGlobalCounter } from "../providers/counter";
-import { useAuth } from "../providers/auth";
+import { oidApi } from "../api/oidApi";
+import { useSearchParams } from "react-router-dom";
 
 const Home = () => {
-  const { counter, increment, decrement } = useCounter("Home");
-  const { value, increment: goUp, decrement: goDown } = useGlobalCounter();
 
-  const { auth, token } = useAuth();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [ error, setError ] = useState(null)
+
+  const api = oidApi()
+
+  const [ username, setUsername ] = useState("");
+  const [ password, setPassword ] = useState("");
+  const [ client, setClient ] = useState(null);
+  const [ redirectUri, setRedirectUri ] = useState(null);
+
+  const login = async () => {
+    const response = await api.post("/user/login", {
+      username, password, client, redirectUri
+    })
+    if (!response) return alert("Network error!")
+    if (response.status !== 200) return alert("Error!")
+    const code = response.data.code
+    window.location.href = redirectUri + "?code=" + code
+  }
+
+  const signup = async () => {
+    const response = await api.post("/user/signup", {
+      username, password
+    })
+    if (!response) return alert("Network error!")
+    if (response.status !== 200) return alert("Error!")
+    alert("Success!")
+    setUsername("")
+    setPassword("")
+  }
+
+  useEffect(() => {
+    const _client = searchParams.get("client_id")
+    const _redirectUri = searchParams.get("redirect_uri")
+    if (!_client) {
+      return setError("Missing params - client_id")
+    }
+    if (!_redirectUri) {
+      return setError("Missing params - redirect_uri")
+    }
+    setClient(_client)
+    setRedirectUri(_redirectUri)
+  }, [])
 
   return (
     <div>
-      <h3>Home</h3>
-      <p>{token ? "Logged in" : "Anonymus"}</p>
-      <h4>Counter: {counter}</h4>
-      <Button onClick={decrement} variant="contained" size="small">
-        -
-      </Button>
-      <Button onClick={increment} variant="contained" size="small">
-        +
-      </Button>
-      <h4>Provider Value: {value}</h4>
-      <Button onClick={goDown} variant="contained" size="small">
-        -
-      </Button>
-      <Button onClick={goUp} variant="contained" size="small">
-        +
-      </Button>
-      {token ? (
-        <>
-          <br />
-          <p>Welcome</p>
-        </>
-      ) : (
-        <Button onClick={auth} variant="contained" color="info" size="small">
-          Google login
-        </Button>
-      )}
+      <h1>Home</h1>
+      {
+        error && <div>{error}</div>
+      }
+      {
+        !error && (
+          <div>
+            <input placeholder="Username" type="text" onChange={(e) => setUsername(e.target.value)} value={username}  />
+            <input placeholder="Password" type="text" onChange={(e) => setPassword(e.target.value)} value={password}  />
+            <button onClick={login}>Login</button>
+            <button onClick={signup}>Signup</button>
+          </div>
+        )
+      }
     </div>
   );
 };
