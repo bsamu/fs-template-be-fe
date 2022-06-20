@@ -1,8 +1,14 @@
 const _config = {
     dev: {
         todoapi: "http://localhost:8080/api",
-        google_client_id: "651816047225-1us03r4vchvce7h51t0c49f4u0ip7ubm.apps.googleusercontent.com",
-        google_base_url: "https://accounts.google.com/o/oauth2/v2/auth",
+        google: {
+            client_id: "651816047225-1us03r4vchvce7h51t0c49f4u0ip7ubm.apps.googleusercontent.com",
+            base_url: "https://accounts.google.com/o/oauth2/v2/auth",
+        },
+        oid:  {
+            client_id: "mycid",
+            base_url: "http://localhost:3000",
+        },
     },
     prod: {
         todoapi: process.env.REACT_APP_TODOAPI || "http://localhost:8080/api",

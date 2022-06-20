@@ -35,7 +35,7 @@ router.post("/login", auth({ block: false }), async (req, res) => {
   );
 
   if (!response) return res.status(500).send("Token provider error");
-  if (response.status !== 200) return res.status(401).send("Nice try");
+  if (response.status !== 200) return res.status(401).send("Nice try - oid provider error");
 
   let oId;
   const onlyOauth = !response.data.id_token;

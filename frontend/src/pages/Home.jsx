@@ -34,9 +34,14 @@ const Home = () => {
           <p>Welcome</p>
         </>
       ) : (
-        <Button onClick={auth} variant="contained" color="info" size="small">
+        <>
+        <Button onClick={() => auth("google")} variant="contained" color="info" size="small">
           Google login
         </Button>
+        <Button onClick={() => auth("oid")} variant="contained" color="info" size="small">
+          My login
+        </Button>
+         </>
       )}
     </div>
   );

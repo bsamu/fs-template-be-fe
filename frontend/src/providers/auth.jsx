@@ -11,17 +11,17 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const { post } = toDoApi();
 
-  const auth = () => {
-    const googleBaseUrl = "https://accounts.google.com/o/oauth2/v2/auth"; // config.google.baseUrl; - így kéne használni
+  const auth = (provider) => {
+    const googleBaseUrl = config[provider].base_url; // config.google.baseUrl; - így kéne használni
 
     const searchParams = new URLSearchParams();
     searchParams.append("response_type", "code");
     searchParams.append(
       "client_id",
-      "651816047225-1us03r4vchvce7h51t0c49f4u0ip7ubm.apps.googleusercontent.com"
+      config[provider].client_id
     );
     // searchParams.append("redirect_uri", "http://localhost:3000/callback"); // /callback/${provider} later
-    searchParams.append("redirect_uri", window.location.origin + "/callback");
+    searchParams.append("redirect_uri", window.location.origin + "/callback/" + provider);
     searchParams.append("scope", "openid");
     searchParams.append("prompt", "select_account");
 
@@ -31,7 +31,7 @@ const AuthProvider = ({ children }) => {
 
   const login = async (code, provider) => {
     try {
-      const response = await http.post("http://localhost:4000/api/user/login", {
+      const response = await post("/user/login", {
         code,
         provider,
       });

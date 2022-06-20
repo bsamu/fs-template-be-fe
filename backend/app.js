@@ -5,16 +5,11 @@ const cors = require("cors");
 const morgan = require("morgan");
 const errorHandler = require("./middleware/errorHandler");
 
-const corsOptions = {
-  origin: process.env.APP_URL, // a FE localhost kell ide
-  optionsSuccessStatus: 200,
-};
-
 morgan.token("host", function (req, res) {
   return req.hostname;
 });
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json()); // body-ban erkezo json-t parse-olni tudja
 app.use(morgan(":method :url :status - HOST: :host  - :response-time ms")); // use this middleware on every request
 

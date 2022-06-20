@@ -11,10 +11,10 @@ const config = {
 
       oid: {
         clientId:
-          process.env.OID_CLIENT_ID || "mycustomclientid",
-        clientSecret: process.env.OID_CLIENT_SECRET || "mycustomclientsecret",
+          process.env.OID_CLIENT_ID || "mycid",
+        clientSecret: process.env.OID_CLIENT_SECRET || "mycsecret",
         redirectUri: process.env.OID_REDIRECT_URI || "http://localhost:3000/callbackoid",
-        tokenEndpoint: "http://localhost:4001/token",
+        tokenEndpoint: "http://localhost:4000/token",
         scope: "openid",
       },
 

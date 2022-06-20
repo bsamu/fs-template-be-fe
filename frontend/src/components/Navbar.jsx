@@ -37,9 +37,16 @@ const Navbar = () => {
         </Button>
       </div>
       <div>
-        {!token ?<Button onClick={auth}>
-          Login
+        {!token ?(
+          <>
+        <Button onClick={() =>auth("google")}>
+          Login with GOOGLE
         </Button>
+        <Button onClick={() => auth("oid")}>
+          Login with MY OID
+        </Button>
+          </>
+        )
         :
         <Button onClick={logout}>
           Logout
