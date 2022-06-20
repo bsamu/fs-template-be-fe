@@ -7,7 +7,7 @@ import { useAuth } from "../providers/auth";
 const Register = () => {
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
-  const { user, register } = useAuth();
+  const { user, register, auth } = useAuth();
 
   useEffect(() => {
     if (user.userId) navigate("/profile");
@@ -24,6 +24,11 @@ const Register = () => {
       />
       <br />
       <Button onClick={() => register(username)}>Register</Button>
+      <hr />
+      <h1>OR!</h1>
+      <hr />
+      <Button onClick={() => auth("google")}>Google</Button>
+      <Button onClick={() => auth("oid")}>Oid</Button>
     </>
   );
 };
