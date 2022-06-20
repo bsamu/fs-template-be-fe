@@ -4,7 +4,7 @@ const config = {
         clientId:
           process.env.GOOGLE_CLIENT_ID || "651816047225-1us03r4vchvce7h51t0c49f4u0ip7ubm.apps.googleusercontent.com",
         clientSecret: process.env.GOOGLE_CLIENT_SECRET || "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",
-        redirectUri: process.env.GOOGLE_REDIRECT_URI || "http://localhost:3000/callback",
+        redirectUri: process.env.GOOGLE_REDIRECT_URI || "http://localhost:3001/callback/google",
         tokenEndpoint: "https://oauth2.googleapis.com/token",
         scope: "openid",
       },
@@ -13,8 +13,8 @@ const config = {
         clientId:
           process.env.OID_CLIENT_ID || "mycid",
         clientSecret: process.env.OID_CLIENT_SECRET || "mycsecret",
-        redirectUri: process.env.OID_REDIRECT_URI || "http://localhost:3000/callbackoid",
-        tokenEndpoint: "http://localhost:4000/token",
+        redirectUri: process.env.OID_REDIRECT_URI || "http://localhost:3000/callback/oid",
+        tokenEndpoint: "http://localhost:4000/api/user/token",
         scope: "openid",
       },
 

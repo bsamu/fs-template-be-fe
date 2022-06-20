@@ -18,6 +18,7 @@ router.post("/login", auth({ block: false }), async (req, res) => {
   const link = configProvider.tokenEndpoint;
 
   // our own http module
+  console.log(configProvider.redirectUri)
   const response = await http.post(
     link,
     {
@@ -35,7 +36,11 @@ router.post("/login", auth({ block: false }), async (req, res) => {
   );
 
   if (!response) return res.status(500).send("Token provider error");
-  if (response.status !== 200) return res.status(401).send("Nice try - oid provider error");
+  if (response.status !== 200) {
+    console.log(response.data)
+    return res.status(401).send("Nice try - oid provider error");
+  }
+
 
   let oId;
   const onlyOauth = !response.data.id_token;
@@ -60,9 +65,8 @@ router.post("/login", auth({ block: false }), async (req, res) => {
   }
 
   const key = `providers.${provider}`;
-  // console.log(key);
-  // console.log("oId: ", oId);
   let user = await User.findOne({ [key]: oId }); // already "registered" user in DB
+  console.log(user)
   if (user && res.locals.user?.providers) {
     user.providers = { ...user.providers, ...res.locals.user.providers }; // append a new provider to its existing one
     user = await user.save();
